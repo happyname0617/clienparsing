@@ -9,21 +9,12 @@ app.use(express.static('public'));
 app.set('view engine', 'pug');
 app.set('views', './views');
 
-// var visualdata=[
-//   ['후보자','거짓','대체로거짓','사실반거짓반','대체로사실','사실','판단유보']
-//   ,['문재인',7,10,5,7,1,3]
-//   ,['안철수',9,5,6,1,3,2]
-//   ,['홍준표',13,7,8,5,4,2]
-//   ,['심상정',0,1,2,1,0,0]
-//   ,['유승민',1,2,3,1,3,0]
-//   ];
-// fs.writeFile('./public/statistic.json',JSON.stringify(visualdata));
 
 
 
 app.get('/', function (req, res) {
   updateStatistics();
-  //res.render('main');
+  res.render('main');
 });
 
 app.listen(8080, function () {
@@ -50,7 +41,7 @@ function updateStatistics(){
   visitedPages={};
   visitedNum =0;
   var targetUrlBase = 'http://news.naver.com/main/election/president2017/factcheck/index.nhn?type=NEW&page=';
-  for(var i=0; i<3;i++)
+  for(var i=0; i<1;i++)
   {
     var url = targetUrlBase+(i+1).toString();
     visitedNum++;
@@ -80,14 +71,16 @@ function DoStatistics(){
   }
 
   //visualization of chart
-  var candidates = ['문재인','안철수','홍준표','심상정','유승민'];
+  var candidates = [escape('문재인'),escape('안철수'),escape('홍준표'),escape('심상정'),escape('유승민')];
   var factEvaluation = ['거짓','대체로거짓','사실반거짓반','대체로사실','사실','판단유보'];
 
   visualizationData.push(['후보자'].concat(factEvaluation));
   for(var i=0;i<candidates.length;i++){
+    console.log([candidates[i]].concat(statistic[candidates[i]]));
     visualizationData.push([candidates[i]].concat(statistic[candidates[i]]));
   }
-  fs.writeFile('/public/statistic.json',JSON.stringify(visualizationData));
+  fs.writeFile('public/statistic.json',JSON.stringify(visualizationData));
+  console.log(visualizationData);
 }
 
 function visitPage(url,callback) {
@@ -104,13 +97,15 @@ function visitPage(url,callback) {
      }
      else{
      // Parse the document body
-     var $ = cheerio.load(body);
+     var $ = cheerio.load(body,{decodeEntities: false});
      var $body=$('body');
      var $nameItems = $body.find('.section .talk_area .thumb_area .name');
      var names=[];
       for (var i=0; i<$nameItems.length; i++) {
         names.push($($nameItems[i]).text());
         console.log($($nameItems[i]).text());
+
+        console.log(escape($($nameItems[i]).html()));
       }
       
       var $facts= $body.find('.section .result_area .tit_area .chk_lst');
