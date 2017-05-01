@@ -17,13 +17,13 @@ app.set('views', './views');
 //   ,['심상정',0,1,2,1,0,0]
 //   ,['유승민',1,2,3,1,3,0]
 //   ];
-// fs.writeFile('public/statistic.json',JSON.stringify(visualdata));
+// fs.writeFile('./public/statistic.json',JSON.stringify(visualdata));
 
 
 
 app.get('/', function (req, res) {
   updateStatistics();
-  res.render('main');
+  //res.render('main');
 });
 
 app.listen(8080, function () {
@@ -33,12 +33,24 @@ app.listen(8080, function () {
 var person=[];
 var visitedPages={};
 var visitedNum =0;
+
+function addArr(arr1, arr2)
+{
+  var newArr=[];
+  for(var i=0;i<arr1.length;i++)
+  {
+    newArr.push(arr1[i]+arr2[i]);
+  }
+  return newArr;
+}
+
+
 function updateStatistics(){
   person=[];
   visitedPages={};
   visitedNum =0;
   var targetUrlBase = 'http://news.naver.com/main/election/president2017/factcheck/index.nhn?type=NEW&page=';
-  for(var i=0; i<1;i++)
+  for(var i=0; i<3;i++)
   {
     var url = targetUrlBase+(i+1).toString();
     visitedNum++;
@@ -75,10 +87,10 @@ function DoStatistics(){
   for(var i=0;i<candidates.length;i++){
     visualizationData.push([candidates[i]].concat(statistic[candidates[i]]));
   }
-  fs.writeFile('public/statistic.json',JSON.stringify(visualizationData));
+  fs.writeFile('/public/statistic.json',JSON.stringify(visualizationData));
 }
 
-function visitPage(url, callback) {
+function visitPage(url,callback) {
   
  // Make the request
   console.log("Visiting page " + url);
@@ -97,17 +109,17 @@ function visitPage(url, callback) {
      var $nameItems = $body.find('.section .talk_area .thumb_area .name');
      var names=[];
       for (var i=0; i<$nameItems.length; i++) {
-        names.push($nameItems[i].innerText);
-        console.log($nameItems[i].innerText);
+        names.push($($nameItems[i]).text());
+        console.log($($nameItems[i]).text());
       }
       
       var $facts= $body.find('.section .result_area .tit_area .chk_lst');
       for (var i=0; i<$facts.length; i++) {
-      var scoreitems= $facts[i.toString()].getElementsByTagName('dd');
+      var scoreitems= $($facts[i.toString()]).find('dd');
       var score=[];
       for(var j=0;j<scoreitems.length;j++)
           {
-      var temp= parseInt(scoreitems[j].innerText);
+      var temp= parseInt($(scoreitems[j]).text());
             console.log(temp);
       score.push(temp>0?1:0);
           }
