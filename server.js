@@ -1,5 +1,5 @@
 var express = require('express');
-var request = require('request');
+var request = require('request-korean');
 var cheerio = require('cheerio');
 var fs = require('fs');
   
@@ -9,12 +9,23 @@ app.use(express.static('public'));
 app.set('view engine', 'pug');
 app.set('views', './views');
 
+// var body = "<li>문재인</li>";
+// var $ = cheerio.load(body,{decodeEntities: false});
+// console.log($('li').text());
 
 
 
 app.get('/', function (req, res) {
-  updateStatistics();
-  res.render('main');
+  //updateStatistics();
+  //res.render('main');
+
+  //var url = 'http://news.naver.com/main/election/president2017/factcheck/index.nhn?type=NEW&page=2';
+  var url='http://www.chinesetop100.com/';
+  request({uri:url, encoding:'euc-kr'}, function(error, response, body) {
+  res.send(body);
+  });
+
+
 });
 
 app.listen(8080, function () {
