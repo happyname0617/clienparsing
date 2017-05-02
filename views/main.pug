@@ -1,11 +1,47 @@
 doctype html
 html(lang="en")
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
-    script(type='text/javascript', src='https://www.google.com/jsapi')
-    script(type='text/javascript', src='script.js')
-    link(rel='stylesheet', type='text/css', href='theme.css')
-    main
-      h2 &#xD329;&#xD2B8;&#xCCB4;&#xD06C; &#xD1B5;&#xACC4;
-      h5
-        a(href='http://news.naver.com/main/election/president2017/factcheck/index.nhn', target='_blank') &#xB124;&#xC774;&#xBC84;-SNU
-      #bar-chart
+    head
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+        link(rel='stylesheet', type='text/css', href='theme.css')
+    body
+        main
+            h2 19대 대선 네이버-SNU 팩트체크 통계
+            h5
+            
+            p 
+                |   네이버에서 제공하는 
+                a(href='http://news.naver.com/main/election/president2017/factcheck/index.nhn', target='_blank') SNU 팩트체크 
+                |   자료를 기준으로 만들었습니다. 서버에서 매 30분마다 한번씩 해당페이지내용을 읽어와서 통계수치를 업데이트 합니다. 
+                a(href ='https://opentutorials.org/course/1375/10037' , target='_blank') 생활코딩 youtube 재생시간 구하기 
+                |   예제를 복습해 보고자 만들어봤습니다. 코드 피드백 환영합니다.  
+            p 사용된 모듈(?)들 : node.js request request-korean express cheerio underscore pug chart.js disqus
+            p 
+                |   소스코드 
+                a(href='https://github.com/happyname0617/factcheckstatistic', target='_blank') github link
+            p 최근 업데이트 시각 #{time}
+                
+            canvas(id="myChart", width="400", height="150")
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js")
+            script(type='text/javascript', src='script.js')
+            #disqus_thread    
+            script.
+              /**
+              *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+              /*
+              var disqus_config = function () {
+              this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+              */
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+              s.src = 'https://byeongsoo.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+            noscript
+              | Please enable JavaScript to view the 
+              a(href='https://disqus.com/?ref_noscript') comments powered by Disqus.
+
+

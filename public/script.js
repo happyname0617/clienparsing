@@ -1,79 +1,143 @@
-var visualdata;
-google.load("visualization", "1", {packages:["corechart"]});
-
-$.getJSON('statistic.json',function(data){
-  console.log(JSON.stringify(data));
-  visualdata=data;
-  google.setOnLoadCallback(drawCharts);
-
-})
-
-
-function drawCharts() {
-  
-  // BEGIN BAR CHART
-  /*
-  // create zero data so the bars will 'grow'
-  var barZeroData = google.visualization.arrayToDataTable([
-    ['Day', 'Page Views', 'Unique Views'],
-    ['Sun',  0,      0],
-    ['Mon',  0,      0],
-    ['Tue',  0,      0],
-    ['Wed',  0,      0],
-    ['Thu',  0,      0],
-    ['Fri',  0,      0],
-    ['Sat',  0,      0]
-  ]);
-	*/
-  // actual bar chart data
-  var barData = google.visualization.arrayToDataTable(visualdata);
-  // set bar chart options
-  var barOptions = {
-    focusTarget: 'category',
-    backgroundColor: 'transparent',
-    colors: ['red', 'tomato','purple','#1F75FE','blue', 'gray'],
-    fontName: 'Open Sans',
-    chartArea: {
-      left: 50,
-      top: 10,
-      width: '100%',
-      height: '70%'
-    },
-    bar: {
-      groupWidth: '80%'
-    },
-    hAxis: {
-      textStyle: {
-        fontSize: 13
-      }
-    },
-    vAxis: {
-      minValue: 0,
-      maxValue: 15,
-      baselineColor: '#DDD',
-      gridlines: {
-        color: '#DDD',
-        count: 4
+$.getJSON('statistic.json',function(mydata){
+  var ctx = document.getElementById("myChart");
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: mydata[0].slice(1,6),
+          datasets: [
+            {
+              label: mydata[1][0],
+              data: mydata[1].slice(1,6),
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(255, 99, 132, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(255,99,132,1)',
+                  'rgba(255,99,132,1)',
+                  'rgba(255,99,132,1)',
+                  'rgba(255,99,132,1)'
+              ],
+              borderWidth: 1
+            },
+            {
+              label: mydata[2][0],
+              data: mydata[2].slice(1,6),
+              backgroundColor: [
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 159, 64, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+                  
+              ],
+              borderColor: [
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            },
+            {
+              label: mydata[3][0],
+              data: mydata[3].slice(1,6),
+              backgroundColor: [
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(153, 102, 255, 0.2)'
+                  
+              ],
+              borderColor: [
+                  'rgba(153, 102, 255, 1.0)',
+                  'rgba(153, 102, 255, 1.0)',
+                  'rgba(153, 102, 255, 1.0)',
+                  'rgba(153, 102, 255, 1.0)',
+                  'rgba(153, 102, 255, 1.0)'
+              ],
+              borderWidth: 1
+            },
+            {
+              label: mydata[4][0],
+              data: mydata[4].slice(1,6),
+              backgroundColor: [
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(75, 192, 192, 0.2'
+                  
+              ],
+              borderColor: [
+                  'rgba(75, 192, 192, 1.0)',
+                  'rgba(75, 192, 192, 1.0)',
+                  'rgba(75, 192, 192, 1.0)',
+                  'rgba(75, 192, 192, 1.0)',
+                  'rgba(75, 192, 192, 1.0)'
+              ],
+              borderWidth: 1
+            },
+            {
+              label: mydata[5][0],
+              data: mydata[5].slice(1,6),
+              backgroundColor: [
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2'
+                  
+              ],
+              borderColor: [
+                  'rgba(54, 162, 235, 1.0)',
+                  'rgba(54, 162, 235, 1.0)',
+                  'rgba(54, 162, 235, 1.0)',
+                  'rgba(54, 162, 235, 1.0)',
+                  'rgba(54, 162, 235, 1.0)'
+              ],
+              borderWidth: 1
+            },
+            {
+              label: mydata[6][0],
+              data: mydata[6].slice(1,6),
+              backgroundColor: [
+                  'rgba(111, 111, 111, 0.2)',
+                  'rgba(111, 111, 111, 0.2)',
+                  'rgba(111, 111, 111, 0.2)',
+                  'rgba(111, 111, 111, 0.2)',
+                  'rgba(111, 111, 111, 0.2)'
+                  
+              ],
+              borderColor: [
+                  'rgba(111,111,111,1)',
+                  'rgba(111,111,111,1)',
+                  'rgba(111,111,111,1)',
+                  'rgba(111,111,111,1)',
+                  'rgba(111,111,111,1)'
+              ],
+              borderWidth: 1
+            }
+          ]
       },
-      textStyle: {
-        fontSize: 11
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
       }
-    },
-    legend: {
-      position: 'bottom',
-      textStyle: {
-        fontSize: 12
-      }
-    },
-    animation: {
-      duration: 1200,
-      easing: 'out',
-			startup: true
-    }
-  };
-  // draw bar chart twice so it animates
-  var barChart = new google.visualization.ColumnChart(document.getElementById('bar-chart'));
-  //barChart.draw(barZeroData, barOptions);
-  barChart.draw(barData, barOptions);
-  
-}
+  });
+
+});
+
+
+
