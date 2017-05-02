@@ -10,7 +10,7 @@ app.set('views', './views');
 
 
 //every 30 minute
-setInterval(updateStatistics, 1000 * 60* 1);
+setInterval(updateStatistics, 1000 * 60* 30);
 
 var person = [];
 var visitedNum = 0;
